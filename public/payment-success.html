@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تم الدفع ✅</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Tajawal',sans-serif;background:#0D0D12;color:#F1F0EB;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.box{max-width:400px;width:100%;text-align:center;}
+.icon{font-size:80px;animation:bnc 1s infinite;}
+@keyframes bnc{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+h1{font-size:28px;font-weight:900;color:#10B981;margin:16px 0 8px;}
+p{color:#9B9B9B;margin-bottom:20px;}
+.code-box{background:#1A1A26;border:2px solid #F5C518;border-radius:16px;padding:24px;margin-bottom:20px;}
+.code-val{font-family:monospace;font-size:30px;font-weight:900;color:#F5C518;letter-spacing:3px;}
+.btn{display:block;padding:14px;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:17px;font-weight:700;border:none;cursor:pointer;background:linear-gradient(135deg,#F5C518,#FF8C00);color:#000;text-decoration:none;margin-bottom:10px;}
+.spin{animation:spn 1s linear infinite;display:inline-block;font-size:30px;}
+@keyframes spn{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="box">
+  <div id="loading">
+    <div class="spin">⏳</div>
+    <h1 style="color:#F5C518;">جاري تجهيز كودك...</h1>
+    <p>ثواني وهزّول جاهز لك 🤖</p>
+  </div>
+  <div id="success" style="display:none;">
+    <div class="icon">🎉</div>
+    <h1>تم الدفع بنجاح!</h1>
+    <p>هزّول ينتظرك 🤖😂</p>
+    <div class="code-box">
+      <div style="font-size:13px;color:#9B9B9B;margin-bottom:8px;">كودك الخاص:</div>
+      <div class="code-val" id="code-display">-</div>
+      <div style="font-size:12px;color:#9B9B9B;margin-top:8px;">احفظ هذا الكود - لا يُعاد إرساله</div>
+    </div>
+    <a class="btn" href="https://hazalgame.netlify.app">ابدأ اللعب مع هزّول 🤖</a>
+  </div>
+  <div id="error" style="display:none;">
+    <div class="icon">😅</div>
+    <h1 style="color:#EF4444;">حصلت مشكلة</h1>
+    <p>تواصلي مع الدعم على إنستقرام @fajeralmusallam</p>
+    <a class="btn" href="https://hazalgame.netlify.app/subscribe.html">حاولي مرة ثانية</a>
+  </div>
+</div>
+
+<script>
+const API = '/.netlify/functions/hazal-payment';
+const params = new URLSearchParams(window.location.search);
+const orderId = params.get('orderId') || params.get('order_id') || params.get('id') || params.get('ref');
+
+async function checkOrder() {
+  if (!orderId) { showError(); return; }
+  try {
+    // أولاً: جرب تأكيد الدفع مباشرة (يولّد الكود حتى لو الـ Webhook ما وصل)
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'confirmPayment', orderId })
+    });
+    const data = await r.json();
+    if (data.code) {
+      document.getElementById('code-display').textContent = data.code;
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+    } else {
+      // لو ما لقى الطلب - اشيك بعد ثانيتين
+      setTimeout(checkOrder, 2000);
+    }
+  } catch(e) {
+    setTimeout(checkOrder, 2000);
+  }
+}
+
+function showError() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('error').style.display = 'block';
+}
+
+checkOrder();
+</script>
+</body>
+</html>

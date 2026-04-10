@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>هزل - اشترك الآن 😂</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Tajawal',sans-serif;background:#0D0D12;color:#F1F0EB;min-height:100vh;padding:20px;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(124,58,237,.2),transparent 60%);pointer-events:none;}
+.wrap{max-width:480px;margin:0 auto;position:relative;z-index:1;}
+.logo{text-align:center;padding:28px 0 6px;}
+.logo h1{font-size:60px;font-weight:900;background:linear-gradient(135deg,#F5C518,#FF6B35,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo p{color:#9B9B9B;font-size:14px;margin-top:4px;}
+.hz-face{width:64px;height:64px;background:linear-gradient(135deg,#7C3AED,#EC4899);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 8px;animation:wg 3s infinite;}
+@keyframes wg{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-10deg)}96%{transform:rotate(10deg)}}
+.card{background:#1A1A26;border:1px solid #2D2D3D;border-radius:20px;padding:22px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#F5C518,#7C3AED);}
+
+/* PLAN CARDS */
+.plan{border:2px solid #2D2D3D;border-radius:18px;padding:20px;cursor:pointer;transition:all .25s;margin-bottom:12px;position:relative;}
+.plan:hover{border-color:#F5C518;background:#1E1E2E;}
+.plan.selected{border-color:#F5C518;background:#1E1E2E;box-shadow:0 0 20px rgba(245,197,24,.2);}
+.plan-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.plan-name{font-size:18px;font-weight:900;}
+.plan-price{font-size:28px;font-weight:900;color:#F5C518;}
+.plan-sub{font-size:12px;color:#9B9B9B;}
+.plan-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#EC4899,#7C3AED);color:#fff;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.plan-check{width:24px;height:24px;border:2px solid #2D2D3D;border-radius:50%;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.plan.selected .plan-check{background:#F5C518;border-color:#F5C518;color:#000;}
+
+/* FORM */
+label{font-size:13px;color:#9B9B9B;display:block;margin-bottom:5px;margin-top:12px;}
+.inp{width:100%;padding:13px 16px;background:#1E1E2E;border:2px solid #2D2D3D;border-radius:12px;color:#F1F0EB;font-family:'Tajawal',sans-serif;font-size:16px;outline:none;transition:border-color .2s;direction:rtl;}
+.inp:focus{border-color:#F5C518;}
+.inp::placeholder{color:#555;}
+
+/* BTN */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:14px;font-family:'Tajawal',sans-serif;font-size:18px;font-weight:700;border:none;cursor:pointer;width:100%;transition:all .2s;}
+.btn:active{transform:scale(.97);}
+.bg{background:linear-gradient(135deg,#F5C518,#FF8C00);color:#000;box-shadow:0 4px 20px rgba(245,197,24,.4);}
+.bg:disabled{opacity:.6;cursor:not-allowed;}
+
+.msg{padding:14px;border-radius:12px;font-size:14px;margin-top:12px;text-align:center;}
+.ok{background:rgba(16,185,129,.15);border:1px solid #10B981;color:#6EE7B7;}
+.err{background:rgba(239,68,68,.15);border:1px solid #EF4444;color:#FCA5A5;}
+
+.features{display:grid;gap:8px;margin-top:10px;}
+.feat{display:flex;align-items:center;gap:10px;font-size:14px;color:#C4B5FD;}
+.feat::before{content:'✅';flex-shrink:0;}
+
+.spin{animation:spn 1s linear infinite;display:inline-block;}
+@keyframes spn{to{transform:rotate(360deg)}}
+
+.code-box{background:#0D0D12;border:2px solid #F5C518;border-radius:14px;padding:20px;text-align:center;margin-top:14px;}
+.code-val{font-family:monospace;font-size:28px;font-weight:900;color:#F5C518;letter-spacing:3px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <div class="hz-face">🤖</div>
+    <h1>هزل</h1>
+    <p>اشترك وهزّول ينتظرك! 😂</p>
+  </div>
+
+  <!-- الباقات -->
+  <div style="height:20px"></div>
+  <div style="font-size:17px;font-weight:700;color:#F5C518;margin-bottom:12px;">اختر باقتك 🎟️</div>
+
+  <div class="plan" id="plan-month" onclick="selectPlan('month')">
+    <div class="plan-header">
+      <div>
+        <div class="plan-name">شهر واحد 🗓️</div>
+        <div class="plan-sub">تجربة هزّول كاملة</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div><span class="plan-price">٣</span><span style="font-size:14px;color:#9B9B9B;"> د.ك</span></div>
+        <div class="plan-check" id="check-month">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plan selected" id="plan-half" onclick="selectPlan('half')">
+    <div class="plan-badge">الأكثر طلباً ⭐</div>
+    <div class="plan-header">
+      <div>
+        <div class="plan-name">٦ أشهر 📅</div>
+        <div class="plan-sub">وفّر ٣٣٪ عن الشهري</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div><span class="plan-price">٨</span><span style="font-size:14px;color:#9B9B9B;"> د.ك</span></div>
+        <div class="plan-check" id="check-half" style="background:#F5C518;border-color:#F5C518;color:#000;">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plan" id="plan-year" onclick="selectPlan('year')">
+    <div class="plan-header">
+      <div>
+        <div class="plan-name">سنة كاملة 🏆</div>
+        <div class="plan-sub">وفّر ٦٧٪ - الأفضل قيمة</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div><span class="plan-price">١٢</span><span style="font-size:14px;color:#9B9B9B;"> د.ك</span></div>
+        <div class="plan-check" id="check-year">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- المميزات -->
+  <div class="card">
+    <div class="features">
+      <div class="feat">١٠٠ سؤال خليجي مضحك</div>
+      <div class="feat">هزّول يرد على كل رسالة 🤖</div>
+      <div class="feat">أوامر حركية مضحكة 😂</div>
+      <div class="feat">كشف جماعي متزامن 🔥</div>
+      <div class="feat">حتى ٥ لاعبين في نفس الغرفة</div>
+    </div>
+  </div>
+
+  <!-- بيانات العميل -->
+  <div class="card">
+    <div style="font-size:16px;font-weight:700;color:#F5C518;margin-bottom:4px;">بيانات بسيطة 📋</div>
+    <label>الاسم</label>
+    <input class="inp" id="cname" placeholder="اسمك هنا...">
+    <label>الإيميل <span style="color:#9B9B9B;font-size:11px;">(يوصلك الكود عليه)</span></label>
+    <input class="inp" id="cemail" placeholder="your@email.com" type="email" dir="ltr">
+    <label>رقم الجوال <span style="color:#9B9B9B;font-size:11px;">(اختياري)</span></label>
+    <input class="inp" id="cphone" placeholder="965XXXXXXXX" dir="ltr">
+  </div>
+
+  <div id="msg" style="display:none" class="msg ok"></div>
+
+  <div style="height:12px"></div>
+  <button class="btn bg" id="pay-btn" onclick="pay()">
+    <span>ادفع بـ KNET الآن</span><span>💳</span>
+  </button>
+  <div style="text-align:center;margin-top:10px;font-size:12px;color:#555;">
+    مدعوم بـ uPayments 🔒 دفع آمن
+  </div>
+
+  <!-- كود بعد الدفع -->
+  <div id="code-result" style="display:none;" class="code-box">
+    <div style="font-size:14px;color:#9B9B9B;margin-bottom:8px;">🎉 شكراً! كودك هو:</div>
+    <div class="code-val" id="code-display">-</div>
+    <div style="font-size:12px;color:#9B9B9B;margin-top:8px;">احفظ الكود وادخل على hazalgame.netlify.app</div>
+    <div style="height:12px"></div>
+    <button class="btn" style="background:#7C3AED;color:#fff;" onclick="location.href='https://hazalgame.netlify.app'">
+      ابدأ اللعب مع هزّول 🤖
+    </button>
+  </div>
+
+  <div style="height:30px"></div>
+</div>
+
+<script>
+const API = '/.netlify/functions/hazal-payment';
+let selectedPlan = 'half';
+let currentOrderId = null;
+let pollInterval = null;
+
+function selectPlan(plan) {
+  selectedPlan = plan;
+  ['month','half','year'].forEach(p => {
+    document.getElementById(`plan-${p}`).classList.toggle('selected', p === plan);
+    const chk = document.getElementById(`check-${p}`);
+    if (p === plan) {
+      chk.style.background = '#F5C518';
+      chk.style.borderColor = '#F5C518';
+      chk.style.color = '#000';
+    } else {
+      chk.style.background = '';
+      chk.style.borderColor = '#2D2D3D';
+      chk.style.color = '';
+    }
+  });
+}
+
+async function pay() {
+  const name  = document.getElementById('cname').value.trim();
+  const email = document.getElementById('cemail').value.trim();
+  const phone = document.getElementById('cphone').value.trim();
+
+  if (!name)  { showMsg('أدخل اسمك أولاً', 'err'); return; }
+  if (!email) { showMsg('أدخل إيميلك - يوصلك الكود عليه', 'err'); return; }
+
+  const btn = document.getElementById('pay-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin">⏳</span> جاري التحضير...';
+  hideMsg();
+
+  try {
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action:'createCharge', plan:selectedPlan, customerName:name, customerEmail:email, customerPhone:phone || '96500000000' })
+    });
+    const data = await r.json();
+
+    if (data.paymentUrl) {
+      currentOrderId = data.orderId;
+      window.location.href = data.paymentUrl;
+    } else {
+      const errMsg = data.error || 'حاولي مرة ثانية';
+      const rawInfo = data.raw ? '\n\nتفاصيل: ' + JSON.stringify(data.raw) : '';
+      showMsg('خطأ: ' + errMsg + rawInfo, 'err');
+      btn.disabled = false;
+      btn.innerHTML = '<span>ادفع بـ KNET الآن</span><span>💳</span>';
+    }
+  } catch(e) {
+    showMsg('خطأ في الاتصال: ' + e.message, 'err');
+    btn.disabled = false;
+    btn.innerHTML = '<span>ادفع بـ KNET الآن</span><span>💳</span>';
+  }
+}
+
+// لو رجعت من صفحة الدفع
+const urlParams = new URLSearchParams(window.location.search);
+const orderId = urlParams.get('order_id') || urlParams.get('orderId');
+if (orderId) {
+  checkOrder(orderId);
+}
+
+async function checkOrder(oid) {
+  try {
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action:'checkOrder', orderId: oid })
+    });
+    const data = await r.json();
+    if (data.status === 'paid' && data.code) {
+      document.getElementById('code-display').textContent = data.code;
+      document.getElementById('code-result').style.display = 'block';
+      document.getElementById('pay-btn').style.display = 'none';
+    } else if (data.status === 'pending') {
+      // لا يزال ينتظر - اشيك مرة ثانية بعد ثانيتين
+      setTimeout(() => checkOrder(oid), 2000);
+    }
+  } catch(e) {}
+}
+
+function showMsg(msg, type) {
+  const el = document.getElementById('msg');
+  el.style.display = 'block';
+  el.className = 'msg ' + type;
+  el.textContent = msg;
+}
+function hideMsg() {
+  document.getElementById('msg').style.display = 'none';
+}
+
+// تهيئة الباقة المختارة
+selectPlan('half');
+</script>
+</body>
+</html>

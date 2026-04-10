@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>هزّول - لوحة الأدمن 🤖</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Tajawal',sans-serif;background:#0D0D12;color:#F1F0EB;min-height:100vh;padding:20px;}
+.wrap{max-width:700px;margin:0 auto;}
+.logo{text-align:center;padding:24px 0 8px;}
+.logo h1{font-size:42px;font-weight:900;background:linear-gradient(135deg,#F5C518,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo p{color:#9B9B9B;font-size:14px;margin-top:4px;}
+.card{background:#1A1A26;border:1px solid #2D2D3D;border-radius:18px;padding:22px;margin-bottom:16px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#F5C518,#7C3AED);}
+.stitle{font-size:16px;font-weight:700;color:#F5C518;margin-bottom:14px;}
+.inp{width:100%;padding:12px 16px;background:#1E1E2E;border:2px solid #2D2D3D;border-radius:12px;color:#F1F0EB;font-family:'Tajawal',sans-serif;font-size:16px;outline:none;transition:border-color .2s;direction:rtl;}
+.inp:focus{border-color:#F5C518;}
+.btn{padding:12px 22px;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;border:none;cursor:pointer;transition:all .2s;}
+.btn:active{transform:scale(.96);}
+.bg{background:linear-gradient(135deg,#F5C518,#FF8C00);color:#000;}
+.bp{background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;}
+.br{background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;}
+.bg2{background:#10B981;color:#fff;}
+.bgh{background:#1E1E2E;color:#F1F0EB;border:1px solid #2D2D3D;}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.sel{padding:12px 16px;background:#1E1E2E;border:2px solid #2D2D3D;border-radius:12px;color:#F1F0EB;font-family:'Tajawal',sans-serif;font-size:15px;outline:none;direction:rtl;flex:1;}
+.sel:focus{border-color:#F5C518;}
+label{font-size:14px;color:#9B9B9B;display:block;margin-bottom:5px;margin-top:10px;}
+.code-item{background:#15151E;border:1px solid #2D2D3D;border-radius:12px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.code-val{font-family:monospace;font-size:18px;font-weight:700;color:#F5C518;flex:1;letter-spacing:2px;}
+.code-meta{font-size:12px;color:#9B9B9B;}
+.badge{display:inline-block;padding:3px 10px;border-radius:14px;font-size:11px;font-weight:700;}
+.badge-ok{background:rgba(16,185,129,.2);color:#6EE7B7;border:1px solid rgba(16,185,129,.3);}
+.badge-exp{background:rgba(239,68,68,.2);color:#FCA5A5;border:1px solid rgba(239,68,68,.3);}
+.msg{padding:12px 16px;border-radius:12px;font-size:14px;margin:10px 0;}
+.ok{background:rgba(16,185,129,.15);border:1px solid #10B981;color:#6EE7B7;}
+.err{background:rgba(239,68,68,.15);border:1px solid #EF4444;color:#FCA5A5;}
+.copy-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:#7C3AED;color:#fff;}
+.sp{height:10px;}
+#login-sc{display:block;}
+#main-sc{display:none;}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.stat{background:#15151E;border:1px solid #2D2D3D;border-radius:12px;padding:14px;text-align:center;}
+.stat-num{font-size:28px;font-weight:900;color:#F5C518;}
+.stat-lbl{font-size:12px;color:#9B9B9B;margin-top:3px;}
+.prices-box{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.price-item{background:#15151E;border:1px solid #2D2D3D;border-radius:12px;padding:14px;text-align:center;}
+.price-num{font-size:24px;font-weight:900;color:#F5C518;}
+.price-lbl{font-size:11px;color:#9B9B9B;margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <h1>هزّول 🤖</h1>
+    <p>لوحة تحكم الأدمن | مشروع الجماد الحي</p>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="login-sc">
+    <div class="card">
+      <div class="stitle">🔐 تسجيل الدخول</div>
+      <label>كلمة المرور</label>
+      <input type="password" class="inp" id="pass-inp" placeholder="أدخل كلمة المرور..." onkeydown="if(event.key==='Enter')login()">
+      <div class="sp"></div>
+      <div id="login-err" style="display:none" class="msg err"></div>
+      <div class="sp"></div>
+      <button class="btn bg" onclick="login()" style="width:100%">دخول 🔑</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main-sc">
+
+    <!-- STATS -->
+    <div class="card">
+      <div class="stitle">📊 إحصائيات هزّول</div>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-num" id="s-codes">-</div><div class="stat-lbl">أكواد مولّدة</div></div>
+        <div class="stat"><div class="stat-num">٢</div><div class="stat-lbl">الأوضاع</div></div>
+        <div class="stat"><div class="stat-num">١٠٠</div><div class="stat-lbl">سؤال</div></div>
+      </div>
+    </div>
+
+    <!-- REDIS TEST -->
+    <div class="card">
+      <div class="stitle">🔌 اختبار الاتصال بـ Redis</div>
+      <button class="btn bg2" onclick="testRedis()" style="width:100%">اختبر الاتصال الآن ⚡</button>
+      <div id="redis-msg" style="display:none" class="msg ok"></div>
+    </div>
+
+    <!-- GENERATE CODES -->
+    <div class="card">
+      <div class="stitle">🎟️ توليد أكواد اشتراك</div>
+      <label>عدد الأكواد</label>
+      <input type="number" class="inp" id="count-inp" value="1" min="1" max="50">
+      <label>مدة الاشتراك</label>
+      <select class="sel" id="months-sel">
+        <option value="1">شهر واحد - ٣ دنانير</option>
+        <option value="6" selected>٦ أشهر - ٨ دنانير</option>
+        <option value="12">سنة كاملة - ١٢ دينار</option>
+      </select>
+      <label>ملاحظة (اختياري)</label>
+      <input type="text" class="inp" id="note-inp" placeholder="مثل: كود هدية - فجر">
+      <div class="sp"></div>
+      <button class="btn bg" onclick="generateCodes()" style="width:100%">ولّد الأكواد 🎟️</button>
+      <div id="gen-msg" style="display:none" class="msg ok"></div>
+      <div id="gen-codes" style="margin-top:12px;"></div>
+    </div>
+
+    <!-- CODES LIST -->
+    <div class="card">
+      <div class="stitle">📋 الأكواد المولّدة</div>
+      <button class="btn bgh" onclick="loadCodes()" style="width:100%;margin-bottom:12px;">تحديث القائمة 🔄</button>
+      <div id="codes-list"><div style="color:#9B9B9B;text-align:center;padding:20px;">اضغط تحديث لعرض الأكواد</div></div>
+    </div>
+
+    <!-- PRICES INFO -->
+    <div class="card">
+      <div class="stitle">💰 أسعار الاشتراك</div>
+      <div class="prices-box">
+        <div class="price-item"><div class="price-num">٣</div><div class="price-lbl">د.ك / شهر</div></div>
+        <div class="price-item" style="border-color:#F5C518"><div class="price-num" style="color:#EC4899">٨</div><div class="price-lbl">د.ك / ٦ أشهر</div></div>
+        <div class="price-item"><div class="price-num">١٢</div><div class="price-lbl">د.ك / سنة</div></div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="card">
+      <div class="stitle">ℹ️ معلومات المنصة</div>
+      <div style="display:grid;gap:10px;">
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#15151E;border-radius:10px;">
+          <span style="color:#9B9B9B;">الموقع</span>
+          <span style="color:#F5C518;font-weight:700;">hazalgame.netlify.app</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#15151E;border-radius:10px;">
+          <span style="color:#9B9B9B;">البوت</span>
+          <span style="color:#F5C518;font-weight:700;">هزّول 🤖</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#15151E;border-radius:10px;">
+          <span style="color:#9B9B9B;">الأوضاع</span>
+          <span style="color:#F5C518;font-weight:700;">🌙 نوم | 🔥 أنشطة</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#15151E;border-radius:10px;">
+          <span style="color:#9B9B9B;">اللاعبين/غرفة</span>
+          <span style="color:#F5C518;font-weight:700;">حتى ٥ لاعبين</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#15151E;border-radius:10px;">
+          <span style="color:#9B9B9B;">الأسئلة</span>
+          <span style="color:#F5C518;font-weight:700;">٥٠ نوم + ٥٠ أنشطة</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGOUT -->
+    <button class="btn bgh" onclick="logout()" style="width:100%;margin-bottom:20px;">خروج 🚪</button>
+  </div>
+</div>
+
+<script>
+const API = '/.netlify/functions/hazal-admin-api';
+let PASS = '';
+
+async function adm(body) {
+  const r = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({...body,password:PASS}) });
+  return r.json();
+}
+
+async function login() {
+  const p = document.getElementById('pass-inp').value;
+  if (!p) { showMsg('login-err','أدخل كلمة المرور','err'); return; }
+  PASS = p;
+  try {
+    const r = await adm({ action:'stats' });
+    if (r.error) { showMsg('login-err', r.error, 'err'); PASS=''; return; }
+    document.getElementById('login-sc').style.display = 'none';
+    document.getElementById('main-sc').style.display = 'block';
+    document.getElementById('s-codes').textContent = r.codeCount || '٠';
+  } catch(e) {
+    PASS='';
+    showMsg('login-err', 'خطأ في الاتصال بالـ server: ' + e.message, 'err');
+  }
+}
+
+function logout() {
+  PASS=''; document.getElementById('login-sc').style.display='block';
+  document.getElementById('main-sc').style.display='none';
+  document.getElementById('pass-inp').value='';
+}
+
+async function testRedis() {
+  const r = await adm({ action:'testRedis' });
+  const el = document.getElementById('redis-msg');
+  el.style.display = 'block';
+  el.className = 'msg ' + (r.ok ? 'ok' : 'err');
+  el.textContent = r.message || (r.ok ? '✅ يشتغل' : '❌ مشكلة');
+}
+
+async function generateCodes() {
+  const count = parseInt(document.getElementById('count-inp').value)||1;
+  const months = parseInt(document.getElementById('months-sel').value)||1;
+  const notes = document.getElementById('note-inp').value;
+  const r = await adm({ action:'generateCodes', count, months, notes });
+  if (r.error) { showMsg('gen-msg', r.error, 'err'); return; }
+  showMsg('gen-msg', `✅ تم توليد ${r.codes.length} كود بنجاح!`, 'ok');
+  const cont = document.getElementById('gen-codes');
+  cont.innerHTML = r.codes.map(c => `
+    <div class="code-item">
+      <div class="code-val">${c.code}</div>
+      <button class="copy-btn" onclick="copyTxt('${c.code}',this)">نسخ</button>
+    </div>
+  `).join('');
+  // Refresh stats
+  const s = await adm({action:'stats'});
+  if(!s.error) document.getElementById('s-codes').textContent = s.codeCount||'٠';
+}
+
+async function loadCodes() {
+  const r = await adm({ action:'listCodes' });
+  if (r.error) { document.getElementById('codes-list').innerHTML=`<div class="msg err">${r.error}</div>`; return; }
+  const codes = r.codes || [];
+  if (!codes.length) { document.getElementById('codes-list').innerHTML='<div style="color:#9B9B9B;text-align:center;padding:20px;">لا يوجد أكواد بعد</div>'; return; }
+  document.getElementById('codes-list').innerHTML = codes.map(c => {
+    const expired = c.expiresAt && Date.now() > c.expiresAt;
+    const expDate = c.expiresAt ? new Date(c.expiresAt).toLocaleDateString('ar-KW') : '-';
+    const mLabel = c.months===1?'شهر':c.months===6?'٦ أشهر':'سنة';
+    return `
+      <div class="code-item">
+        <div>
+          <div class="code-val">${c.code}</div>
+          <div class="code-meta">${mLabel} | ينتهي: ${expDate} ${c.notes?'| '+c.notes:''}</div>
+        </div>
+        <span class="badge ${expired?'badge-exp':'badge-ok'}">${expired?'منتهي':'فعّال'}</span>
+        <button class="copy-btn" onclick="copyTxt('${c.code}',this)">نسخ</button>
+        <button class="btn br" style="padding:6px 12px;font-size:12px;" onclick="deleteCode('${c.code}',this)">حذف</button>
+      </div>
+    `;
+  }).join('');
+}
+
+async function deleteCode(code, btn) {
+  if (!confirm(`حذف الكود ${code}؟`)) return;
+  const r = await adm({ action:'deleteCode', code });
+  if (!r.error) { btn.closest('.code-item').remove(); }
+}
+
+function copyTxt(txt, btn) {
+  navigator.clipboard?.writeText(txt).catch(()=>{});
+  const orig = btn.textContent; btn.textContent='✅'; setTimeout(()=>btn.textContent=orig,2000);
+}
+
+function showMsg(id, msg, type) {
+  const el = document.getElementById(id);
+  if (!el) return; el.style.display='block'; el.className='msg '+(type||'ok'); el.textContent=msg;
+}
+</script>
+</body>
+</html>
