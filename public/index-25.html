@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>هزل 😂 - لعبة هزّول</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Cairo:wght@900&display=swap" rel="stylesheet">
+<style>
+:root{--g:#F5C518;--d:#0D0D12;--d2:#15151E;--d3:#1E1E2E;--p:#7C3AED;--pk:#EC4899;--gr:#10B981;--r:#EF4444;--t:#F1F0EB;--m:#9B9B9B;--c:#1A1A26;--b:#2D2D3D;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Tajawal',sans-serif;background:var(--d);color:var(--t);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(124,58,237,.15),transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(245,197,24,.08),transparent 60%);pointer-events:none;z-index:0;}
+
+/* SCREENS */
+.sc{display:none;min-height:100vh;position:relative;z-index:1;padding:20px;}
+.sc.on{display:flex;flex-direction:column;animation:fi .4s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.wrap{max-width:480px;margin:0 auto;width:100%;}
+
+/* LOGO */
+.logo{font-family:'Cairo',sans-serif;font-size:80px;font-weight:900;text-align:center;background:linear-gradient(135deg,var(--g),#FF6B35,var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;filter:drop-shadow(0 0 30px rgba(245,197,24,.5));animation:pl 3s infinite;}
+@keyframes pl{0%,100%{filter:drop-shadow(0 0 30px rgba(245,197,24,.5))}50%{filter:drop-shadow(0 0 60px rgba(245,197,24,.9))}}
+.hz-face{width:65px;height:65px;background:linear-gradient(135deg,var(--p),var(--pk));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 6px;animation:wg 3s infinite;}
+@keyframes wg{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-10deg)}96%{transform:rotate(10deg)}}
+
+/* CARDS */
+.card{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:22px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g),var(--p));}
+.stitle{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g);}
+
+/* BUTTONS */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:15px 24px;border-radius:14px;font-family:'Tajawal',sans-serif;font-size:18px;font-weight:700;border:none;cursor:pointer;transition:all .2s;width:100%;}
+.btn:active{transform:scale(.96);}
+.bg{background:linear-gradient(135deg,var(--g),#FF8C00);color:#000;box-shadow:0 4px 20px rgba(245,197,24,.4);}
+.bg:hover{box-shadow:0 6px 30px rgba(245,197,24,.6);transform:translateY(-2px);}
+.bp{background:linear-gradient(135deg,var(--p),#A855F7);color:#fff;}
+.bgh{background:var(--d3);color:var(--t);border:1px solid var(--b);}
+.bo{background:transparent;color:var(--g);border:2px solid var(--g);}
+.bsm{padding:10px 18px;font-size:14px;border-radius:10px;}
+.row{display:flex;gap:12px;}.row .btn{flex:1;}
+
+/* INPUT */
+.inp{width:100%;padding:15px 18px;background:var(--d3);border:2px solid var(--b);border-radius:14px;color:var(--t);font-family:'Tajawal',sans-serif;font-size:18px;font-weight:500;outline:none;transition:border-color .2s;text-align:center;direction:rtl;}
+.inp:focus{border-color:var(--g);}
+.inp::placeholder{color:var(--m);}
+
+/* MODE CARDS */
+.mcard{background:var(--c);border:2px solid var(--b);border-radius:20px;padding:26px 18px;cursor:pointer;transition:all .25s;text-align:center;}
+.mcard:hover,.mcard.sel{border-color:var(--g);background:var(--d3);transform:translateY(-4px);box-shadow:0 8px 30px rgba(245,197,24,.2);}
+.micon{font-size:50px;margin-bottom:10px;display:block;}
+.mtit{font-size:19px;font-weight:900;}
+.mdesc{font-size:12px;color:var(--m);margin-top:5px;}
+
+/* QUESTION */
+.qcard{background:linear-gradient(135deg,#1A1A2E,#16213E);border:2px solid var(--p);border-radius:24px;padding:28px 22px;text-align:center;box-shadow:0 0 40px rgba(124,58,237,.2);}
+.qbadge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:12px;}
+.qtext{font-size:21px;font-weight:700;line-height:1.6;color:#fff;}
+.tc-choice{background:rgba(124,58,237,.2);color:#A78BFA;}
+.tc-dare{background:rgba(239,68,68,.2);color:#FCA5A5;}
+.tc-story{background:rgba(245,197,24,.2);color:var(--g);}
+
+/* OPTIONS */
+.opts{display:grid;gap:11px;margin-top:18px;}
+.opt{background:var(--d3);border:2px solid var(--b);border-radius:16px;padding:16px 18px;cursor:pointer;transition:all .2s;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:600;color:var(--t);text-align:right;display:flex;align-items:center;gap:12px;}
+.opt:hover{border-color:var(--g);background:rgba(245,197,24,.1);transform:translateX(-4px);}
+.opt:active{transform:scale(.97);}
+.opt.chosen{border-color:var(--gr);background:rgba(16,185,129,.15);}
+.opt.disabled{opacity:.5;cursor:not-allowed;}
+.oltr{width:34px;height:34px;border-radius:9px;background:var(--b);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;}
+
+/* WAITING FOR OTHERS */
+.wait-box{background:rgba(124,58,237,.15);border:2px solid rgba(124,58,237,.4);border-radius:16px;padding:20px;text-align:center;margin-top:16px;}
+.wait-dots{display:flex;justify-content:center;gap:8px;margin-top:12px;}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--p);animation:db 1.4s infinite;}
+.dot:nth-child(2){animation-delay:.2s;}
+.dot:nth-child(3){animation-delay:.4s;}
+@keyframes db{0%,80%,100%{transform:scale(.6);opacity:.5}40%{transform:scale(1);opacity:1}}
+
+/* REVEAL SCREEN */
+.reveal-header{background:linear-gradient(135deg,var(--p),var(--pk));border-radius:20px;padding:20px;text-align:center;margin-bottom:16px;}
+.reveal-item{background:var(--c);border:2px solid var(--b);border-radius:18px;padding:18px;margin-bottom:12px;animation:slideR .4s ease forwards;opacity:0;transform:translateX(30px);}
+.reveal-item.show{opacity:1;transform:translateX(0);}
+@keyframes slideR{to{opacity:1;transform:translateX(0)}}
+.reveal-player{font-size:15px;font-weight:700;color:var(--g);margin-bottom:6px;}
+.reveal-answer{font-size:17px;font-weight:700;color:var(--t);margin-bottom:8px;padding:8px 14px;background:var(--d3);border-radius:10px;}
+.reveal-bot{font-size:14px;color:var(--m);line-height:1.5;padding:8px 12px;background:rgba(124,58,237,.1);border-radius:10px;border-right:3px solid var(--p);}
+.hazzoul-says{background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:16px;padding:14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px;}
+.hz-mini{width:38px;height:38px;background:linear-gradient(135deg,var(--p),var(--pk));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+
+/* TIMER BAR */
+.timer-wrap{height:6px;background:var(--b);border-radius:10px;margin-bottom:14px;overflow:hidden;}
+.timer-fill{height:100%;background:linear-gradient(90deg,var(--gr),var(--g));border-radius:10px;transition:width .5s linear;}
+.timer-fill.low{background:linear-gradient(90deg,var(--r),#FF6B35);}
+
+/* PROGRESS */
+.prog-bar{height:5px;background:var(--b);border-radius:10px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--p),var(--g));border-radius:10px;transition:width .5s ease;}
+
+/* CHAT */
+.chat-btn{position:fixed;bottom:24px;left:24px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--pk));border:none;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(124,58,237,.5);z-index:500;}
+.cbadge{position:absolute;top:-4px;right:-4px;width:20px;height:20px;background:var(--r);border-radius:50%;font-size:10px;font-weight:900;display:none;align-items:center;justify-content:center;color:#fff;}
+.cpanel{position:fixed;inset:0;background:#0D0D12;z-index:700;display:none !important;flex-direction:column;isolation:isolate;}
+.cpanel.open{display:flex;animation:su .3s ease;}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.chdr{padding:18px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;background:var(--d3);}
+.chdr-left{display:flex;align-items:center;gap:10px;}
+.cmsgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.cmsg{max-width:85%;animation:mi .3s ease;}
+@keyframes mi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.cmsg.sys{align-self:center;}
+.cmsg.bot{align-self:flex-start;}
+.cmsg.me{align-self:flex-end;}
+.cmsg.other{align-self:flex-start;}
+.cmsg.ans{align-self:center;width:100%;}
+.bbl{padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5;}
+.cmsg.sys .bbl{background:rgba(245,197,24,.15);border:1px solid rgba(245,197,24,.3);color:var(--g);font-size:12px;text-align:center;border-radius:18px;}
+.cmsg.bot .bbl{background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(168,85,247,.2));border:1px solid rgba(124,58,237,.4);color:#fff;font-size:16px;}
+.cmsg.me .bbl{background:linear-gradient(135deg,var(--g),#FF8C00);color:#000;font-weight:600;}
+.cmsg.other .bbl{background:var(--d3);border:1px solid var(--b);}
+.cmsg.ans .bbl{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);font-size:13px;text-align:center;border-radius:18px;}
+.mname{font-size:10px;color:var(--m);margin-bottom:3px;padding-right:3px;}
+.bhdhr{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.cinput-area{padding:14px;border-top:1px solid var(--b);background:var(--d3);display:flex;gap:10px;}
+.cinp{flex:1;padding:11px 14px;background:var(--d);border:2px solid var(--b);border-radius:12px;color:var(--t);font-family:'Tajawal',sans-serif;font-size:15px;outline:none;direction:rtl;}
+.cinp:focus{border-color:var(--p);}
+.csend{width:46px;height:46px;border-radius:12px;background:var(--p);border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* ROOM CODE */
+.rcode{text-align:center;padding:18px;background:var(--d3);border-radius:14px;border:2px dashed var(--g);}
+.rcval{font-family:'Cairo',sans-serif;font-size:30px;font-weight:900;color:var(--g);letter-spacing:3px;}
+.pchip{background:var(--d3);border:2px solid var(--b);border-radius:28px;padding:7px 14px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;}
+.pchip.host{border-color:var(--g);}
+.pdot{width:9px;height:9px;background:var(--gr);border-radius:50%;}
+
+/* LEADERBOARD */
+.lbitem{display:flex;align-items:center;gap:11px;background:var(--d3);border-radius:11px;padding:11px 14px;}
+.lbrank{font-size:22px;width:34px;text-align:center;}
+.lbname{flex:1;font-weight:700;}
+.lbscore{font-size:17px;font-weight:900;color:var(--g);}
+
+/* MISC */
+.sp{height:14px;}
+.tc{text-align:center;}
+.tm{color:var(--m);font-size:13px;}
+.err{background:rgba(239,68,68,.15);border:1px solid var(--r);border-radius:11px;padding:11px 14px;color:#FCA5A5;font-size:13px;text-align:center;}
+.ok{background:rgba(16,185,129,.15);border:1px solid var(--gr);border-radius:11px;padding:11px 14px;color:#6EE7B7;font-size:13px;text-align:center;}
+.spin{display:inline-block;animation:spn 1s linear infinite;}
+@keyframes spn{to{transform:rotate(360deg)}}
+
+/* PRICES */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px;}
+.pitem{background:var(--d3);border:1px solid var(--b);border-radius:11px;padding:11px 6px;text-align:center;}
+.pnum{font-size:21px;font-weight:900;color:var(--g);}
+.plabel{font-size:10px;color:var(--m);margin-top:2px;}
+
+/* هزّول LIVE BAR */
+.hz-live{position:fixed;bottom:90px;left:12px;right:12px;background:linear-gradient(135deg,rgba(80,20,180,.97),rgba(124,58,237,.95));border:1px solid rgba(168,85,247,.7);border-radius:18px;padding:13px 16px;display:none;align-items:center;gap:12px;animation:hzPop .35s cubic-bezier(.34,1.56,.64,1);z-index:400;box-shadow:0 4px 24px rgba(124,58,237,.5);}
+.hz-live.show{display:flex;}
+@keyframes hzPop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.hz-icon-live{width:38px;height:38px;background:linear-gradient(135deg,var(--p),var(--pk));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;animation:wg 2s infinite;}
+.hz-live-txt{font-size:17px;font-weight:700;color:#fff;line-height:1.5;flex:1;}
+.hz-typing{display:flex;gap:4px;align-items:center;padding:10px 14px;}
+.hz-typing span{width:7px;height:7px;border-radius:50%;background:#A78BFA;animation:db 1.4s infinite;}
+.hz-typing span:nth-child(2){animation-delay:.2s;}
+.hz-typing span:nth-child(3){animation-delay:.4s;}
+
+/* BREATHING */
+.bcircle{width:170px;height:170px;border-radius:50%;border:4px solid var(--p);margin:28px auto;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;transition:all .5s ease;}
+.bcircle.inhale{transform:scale(1.4);border-color:var(--g);background:rgba(124,58,237,.15);}
+.bcircle.exhale{transform:scale(1);border-color:var(--p);background:transparent;}
+
+/* CONFETTI */
+.cnf{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
+.cnfp{position:absolute;width:10px;height:10px;border-radius:2px;top:-20px;animation:cfl var(--d) linear var(--delay) forwards;}
+@keyframes cfl{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+/* RESULT */
+.rcrd{background:linear-gradient(135deg,#1A1A3E,#2D1B69);border:2px solid var(--g);border-radius:22px;padding:28px 22px;text-align:center;}
+.remoji{font-size:76px;margin-bottom:14px;display:block;animation:bnc 1s infinite;}
+@keyframes bnc{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+</style>
+</head>
+<body>
+
+<!-- ══ LANDING ══ -->
+<div class="sc on" id="sc-land">
+  <div class="wrap" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="logo">هزل</div>
+    <div class="tc tm" style="margin-top:6px;letter-spacing:1px;">لعبة هزل بإدارة هزّول خفيف الطينة 🤪🤖</div>
+    <div style="height:6px"></div>
+    <div class="hz-face">🤖</div>
+    <div class="tc" style="font-size:13px;color:var(--p);font-weight:700;">هزّول ينتظرك!</div>
+    <div style="height:24px"></div>
+    <div class="card">
+      <div class="stitle">🎟️ أدخل كود الاشتراك</div>
+      <div class="sp"></div>
+      <input class="inp" id="sub-inp" placeholder="HZ-XXXX-XXXX" style="font-family:monospace;font-size:21px;letter-spacing:2px;" oninput="this.value=this.value.toUpperCase()">
+      <div style="height:12px"></div>
+      <div id="sub-err" style="display:none" class="err"></div>
+      <div style="height:10px"></div>
+      <button class="btn bg" onclick="validateCode()"><span>ادخل مع هزّول</span><span>🤖</span></button>
+    </div>
+    <div style="height:14px"></div>
+    <div class="card tc">
+      <div style="font-size:20px;margin-bottom:6px;">💰 اشتراك هزّول</div>
+      <div class="pgrid">
+        <div class="pitem"><div class="pnum">٣</div><div class="plabel">د.ك / شهر</div></div>
+        <div class="pitem" style="border-color:var(--g)"><div class="pnum" style="color:var(--pk)">٨</div><div class="plabel">د.ك / ٦ أشهر</div></div>
+        <div class="pitem"><div class="pnum">١٢</div><div class="plabel">د.ك / سنة</div></div>
+      </div>
+    </div>
+    <div style="height:12px"></div>
+    <button class="btn bgh bsm" onclick="location.href='https://www.fashionection.com'">💳 اشترك الآن - من ٣ دنانير</button>
+    <div style="height:8px"></div>
+    <button class="btn bgh bsm" style="font-size:13px;opacity:.7;" onclick="demoMode()">🎭 تجربة مجانية - ٥ أسئلة</button>
+  </div>
+</div>
+
+<!-- ══ MODE ══ -->
+<div class="sc" id="sc-mode">
+  <div class="wrap">
+    <div class="tc" style="padding:16px 0;">
+      <div class="hz-face" style="width:52px;height:52px;font-size:26px;"></div>
+      <div style="font-size:26px;font-weight:900;color:var(--g);margin-top:6px;">هزّول يسأل: كيف تبي تلعب؟ 😂</div>
+    </div>
+    <div style="display:grid;gap:14px;">
+      <div class="mcard" onclick="selectMode('sleep')">
+        <span class="micon">🌙</span>
+        <div class="mtit">ما قبل النوم</div>
+        <div class="mdesc">٥٠ سؤال اختياري مضحك تنام بعده وأنت فرحان 😂</div>
+      </div>
+      <div class="mcard" onclick="selectMode('adults')">
+        <span class="micon">🔥</span>
+        <div class="mtit">ألعاب وأنشطة</div>
+        <div class="mdesc">أوامر حركية + تمارين تنفس + قصص مضحكة + هزّول لا يرحم 😈</div>
+      </div>
+    </div>
+    <div style="height:16px"></div>
+    <button class="btn bgh bsm" onclick="go('sc-land')">← رجوع</button>
+  </div>
+</div>
+
+<!-- ══ ROOM ══ -->
+<div class="sc" id="sc-room">
+  <div class="wrap">
+    <div class="tc" style="padding:14px 0;">
+      <div style="font-size:26px;font-weight:900;color:var(--g);">الغرفة 🎮</div>
+      <div class="tm">هزّول ينتظر اللاعبين</div>
+    </div>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="stitle">👤 اسمك في اللعبة</div>
+      <input class="inp" id="pname-inp" placeholder="اسمك هنا..." maxlength="20">
+    </div>
+    <button class="btn bg" onclick="createRoom()"><span>إنشاء غرفة</span><span>🏠</span></button>
+    <div class="tc" style="padding:12px 0;color:var(--m);font-size:13px;">- أو -</div>
+    <div class="card">
+      <div class="stitle">🔑 انضم لغرفة موجودة</div>
+      <input class="inp" id="join-inp" placeholder="HZ-XXXX-XXXX" style="font-family:monospace;" oninput="this.value=this.value.toUpperCase()">
+      <div style="height:10px"></div>
+      <button class="btn bp" onclick="joinRoom()">انضم الآن 🚀</button>
+    </div>
+    <div style="height:10px"></div>
+    <div id="room-err" style="display:none" class="err"></div>
+    <div style="height:6px"></div>
+    <button class="btn bgh bsm" onclick="go('sc-mode')">← رجوع</button>
+  </div>
+</div>
+
+<!-- ══ WAITING ROOM ══ -->
+<div class="sc" id="sc-wait">
+  <div class="wrap">
+    <div class="tc" style="padding:14px 0;">
+      <div class="hz-face" style="width:52px;height:52px;font-size:26px;"></div>
+      <div style="font-size:22px;font-weight:900;">هزّول ينتظر اللاعبين ⏳</div>
+    </div>
+    <div class="rcode">
+      <div class="tm" style="margin-bottom:6px;">شارك هذا الكود مع أصحابك</div>
+      <div class="rcval" id="rc-display">-</div>
+      <div style="height:8px"></div>
+      <button class="btn bo bsm" onclick="copyCode()" style="width:auto;display:inline-flex;">📋 نسخ الكود</button>
+    </div>
+    <div style="height:14px"></div>
+    <div class="card">
+      <div class="stitle">👥 اللاعبين (<span id="pc">0</span>/5)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:9px;" id="plist"></div>
+    </div>
+    <div style="height:14px"></div>
+    <button class="btn bg" id="start-btn" onclick="startGame()">يلا هزّول نبدأ! 🚀</button>
+    <div style="height:6px"></div>
+    <div id="start-err" style="display:none" class="err"></div>
+  </div>
+</div>
+
+<!-- ══ BREATHING ══ -->
+<div class="sc" id="sc-breath">
+  <div class="wrap" style="flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;">
+    <div class="hz-face" style="width:60px;height:60px;font-size:30px;"></div>
+    <div style="font-size:21px;font-weight:900;color:var(--p);margin-top:8px;">هزّول يقول: خذ نفسك معه! 💨</div>
+    <div class="tm" style="margin-top:6px;">استراحة تنفس قبل ما نكمل الهجوم 😂</div>
+    <div class="bcircle" id="bc"><span id="bt">استعد</span></div>
+    <div style="font-size:17px;font-weight:700;" id="bp-txt">-</div>
+    <div style="height:24px"></div>
+    <button class="btn bp" id="skip-btn" onclick="skipBreath()" style="display:none;">كمل مع هزّول ▸</button>
+  </div>
+</div>
+
+<!-- ══ GAME ══ -->
+<div class="sc" id="sc-game">
+  <div class="wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <div id="mode-bdg" style="padding:4px 12px;border-radius:18px;font-size:12px;font-weight:700;background:rgba(124,58,237,.2);color:#A78BFA;">🤖 هزّول</div>
+      <div class="tm">السؤال <span id="qnum">1</span> / 20</div>
+    </div>
+    <div class="prog-bar" style="margin-bottom:10px;">
+      <div class="prog-fill" id="prog" style="width:5%"></div>
+    </div>
+    <!-- Timer -->
+    <div class="timer-wrap">
+      <div class="timer-fill" id="timer-fill" style="width:100%"></div>
+    </div>
+    <!-- Question card -->
+    <div class="qcard" id="qcard">
+      <div class="tm" id="q-intro" style="font-size:12px;margin-bottom:10px;font-style:italic;"></div>
+      <span class="qbadge tc-choice" id="qbadge">سؤال</span>
+      <div class="qtext" id="qtext">جاري تحميل السؤال...</div>
+    </div>
+    <!-- هزّول الحي على شاشة اللعبة -->
+    <div class="hz-live" id="hz-live">
+      <div class="hz-icon-live">🤖</div>
+      <div class="hz-live-txt" id="hz-live-txt">هزّول جاهز! 😂</div>
+    </div>
+    <!-- Options -->
+    <div class="opts" id="opts"></div>
+    <!-- Waiting for others -->
+    <div class="wait-box" id="wait-others" style="display:none;">
+      <div style="font-size:16px;font-weight:700;color:#A78BFA;">⏳ انتظار البقية...</div>
+      <div class="tm" style="margin-top:6px;" id="ans-count">أجاب ١ من ١</div>
+      <div class="wait-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <!-- Host can force reveal -->
+      <button class="btn bp bsm" id="force-btn" style="display:none;margin-top:12px;" onclick="forceReveal()">اكشف الآن! 👁️</button>
+    </div>
+    <div style="height:70px"></div>
+  </div>
+</div>
+
+<!-- ══ REVEAL ══ -->
+<div class="sc" id="sc-reveal">
+  <div class="wrap">
+    <div class="reveal-header">
+      <div style="font-size:28px;">🔥 الكشف الجماعي!</div>
+      <div style="font-size:14px;color:rgba(255,255,255,.8);margin-top:4px;">هزّول يكشف إجابات الجميع 😂</div>
+    </div>
+    <!-- هزّول يعلق -->
+    <div class="hazzoul-says" id="hz-group-say" style="display:none;">
+      <div class="hz-mini">🤖</div>
+      <div style="font-size:15px;font-weight:700;color:#A78BFA;" id="hz-group-txt"></div>
+    </div>
+    <!-- Reveal items -->
+    <div id="reveal-items"></div>
+    <div style="height:14px"></div>
+    <button class="btn bg" id="next-btn" onclick="nextQuestion()">السؤال التالي ▸</button>
+    <div style="height:8px"></div>
+    <div id="next-hint" class="tm tc" style="font-size:12px;"></div>
+    <div style="height:70px"></div>
+  </div>
+</div>
+
+<!-- ══ RESULT ══ -->
+<div class="sc" id="sc-result">
+  <div class="wrap">
+    <div class="tc" style="padding:18px 0;">
+      <div class="hz-face"></div>
+      <div style="font-size:26px;font-weight:900;color:var(--g);">هزّول يصفق لكم! 🏆</div>
+    </div>
+    <div class="rcrd">
+      <span class="remoji" id="r-emoji">🎊</span>
+      <div style="font-size:24px;font-weight:900;color:var(--g);" id="r-title"></div>
+      <div style="color:var(--m);margin-top:6px;font-size:14px;" id="r-desc"></div>
+    </div>
+    <div style="height:14px"></div>
+    <div class="card">
+      <div class="stitle">🏆 ترتيب هزّول</div>
+      <div id="lb" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+    <div style="height:14px"></div>
+    <div class="row">
+      <button class="btn bg" onclick="restart()">العب مرة ثانية 🔄</button>
+      <button class="btn bgh" onclick="go('sc-mode')">غير الوضع</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CHAT BUTTON ══ -->
+<button class="chat-btn" id="chat-btn" onclick="toggleChat()" style="display:none !important;">
+  💬<span class="cbadge" id="cbadge">0</span>
+</button>
+
+<!-- ══ CHAT PANEL ══ -->
+<div class="cpanel" id="cpanel">
+  <div class="chdr">
+    <div class="chdr-left">
+      <div class="hz-mini">🤖</div>
+      <div><div style="font-weight:700;font-size:15px;">هزّول يتكلم 😂</div><div style="font-size:10px;color:var(--m);">الشات المشترك</div></div>
+    </div>
+    <button onclick="toggleChat()" style="width:34px;height:34px;background:var(--b);border:none;border-radius:50%;cursor:pointer;font-size:16px;color:var(--t);display:flex;align-items:center;justify-content:center;">✕</button>
+  </div>
+  <div class="cmsgs" id="cmsgs"></div>
+  <div class="cinput-area">
+    <input class="cinp" id="cinp" placeholder="قول شي مضحك..." maxlength="200" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="csend" onclick="sendChat()">↑</button>
+  </div>
+</div>
+
+<div class="cnf" id="cnf"></div>
+
+<script>
+const API = '/.netlify/functions/hazal-api';
+const LETTERS = ['أ','ب','ج','د'];
+const TYPE_LABELS = { choice:'اختيار متعدد', dare:'أمر هزّول 😈', story:'قصة هزّول 🎭' };
+const TYPE_CLS = { choice:'tc-choice', dare:'tc-dare', story:'tc-story' };
+
+let S = {
+  demo:false, mode:null, roomCode:null, pid:null, pname:null, isHost:false,
+  questions:[], totalQ:20, qIndex:0, answered:false, chatOpen:false,
+  lastChatTs:0, newMsgs:0, pollRoom:null, pollChat:null,
+  breathCb:null, timerInterval:null, timerSecs:30, autoRevealTimeout:null
+};
+
+const DEMO_Q = [
+  {id:'d1',level:1,type:'choice',text:'لو كنت وجبة سريعة، ايش تكون؟',options:['شاورما 🌯','برقر 🍔','بيتزا 🍕','كنتاكي 🍗'],bot:{'0':'شاورما! هزّول يقول: تجمع كل شي بشكل مشبوه بس الناس تحبك 🌯','1':'برقر! هزّول يقول: كبير من الخارج بس نصه هواء - لا تزعل 🍔','2':'بيتزا! هزّول يقول: الكل يطلبك بس ما أحد يكمل القطعة لحاله 🍕','3':'كنتاكي! هزّول يقول: عندك طبقات سرية والناس تجي لك خصيصاً 🍗'}},
+  {id:'d2',level:1,type:'dare',text:'🎯 أمر هزّول: قل "قاقووووقي" بأعلى صوت ممكن الآن! 😂',options:['قلتها وأنا فخور! 👑','قلتها وضحكت قبل ما أكمل','قلتها وجاء أحد يشيك','رفضت - عندي كرامة'],bot:{'0':'قلتها بفخر! هزّول يقول: أنت الأشجع في الغرفة 👑','1':'ضحكت قبل! هزّول يقول: الجسم رفض الكلمة لأنها طريفة جداً 🤣','2':'جاء أحد! هزّول يقول: نجحت في إشراك العائلة بدون تخطيط 😂','3':'عندك كرامة! هزّول يقول: محترم - بس قاقوقي أحلى 😂'}},
+  {id:'d3',level:1,type:'story',text:'🎭 قصة هزّول: صحيت الصبح وكل شي غلط - الكهرباء والماء والموبايل. ايش تسوي؟',options:['أرجع للنوم - الدنيا تقرر 😴','أخرج البيت وأبدأ من برة','أحل واحدة واحدة بهدوء','أتصل بشخص يشاركني الكارثة'],bot:{'0':'ترجع للنوم! هزّول يقول: الحل الأذكى - الدنيا تصلح نفسها بدونك 😴','1':'تخرج! هزّول يقول: الفرار من الكارثة نحو حرية مؤقتة 🚪','2':'تحل واحدة واحدة! هزّول يقول: البطل الحقيقي - الهدوء وسط الفوضى 🏆','3':'تتصل! هزّول يقول: المصيبة المشتركة نصف مصيبة - علم اجتماع 😂'}},
+  {id:'d4',level:2,type:'choice',text:'ايش أصعب شي تقوله لشخص تهتم له؟',options:['أنا غلطان','أنا خايف/خايفة','أحتاجك','أنا متأثر/متأثرة'],bot:{'0':'أنت غلطان! هزّول يقول: تحتاج شجاعة لا يملكها كثيرون 🦁','1':'خايف! هزّول يقول: الاعتراف بالخوف أقوى من إنكاره 💪','2':'أحتاجك! هزّول يقول: الاحتياج إنساني وجميل - الخجل منه هو الغريب 💛','3':'متأثر! هزّول يقول: مشاعرك تستحق أن تُقال بصوت 🌸'}},
+  {id:'d5',level:2,type:'dare',text:'🗣️ أمر هزّول: قل "أنا إنسان رائع" ٣ مرات بصوت عالٍ!',options:['قلتها وأنا مصدق! 👑','قلتها وضحكت','قلتها وما مقتنع','رفضت - مو غرور'],bot:{'0':'مصدق! هزّول يقول: الثقة بالنفس بداية كل نجاح 👑','1':'ضحكت! هزّول يقول: جزء منك مصدق وهذا يكفي 😄','2':'مو مقتنع! هزّول يقول: كرر كل يوم والتصديق يأتي تلقائياً 💛','3':'مو غرور! هزّول يقول: الفرق بين الغرور والثقة - أنت تعرفه 🌱'}},
+];
+
+// ════════════════ NAVIGATION ════════════════
+function go(id) {
+  document.querySelectorAll('.sc').forEach(s => s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+// ════════════════ AUTH ════════════════
+async function validateCode() {
+  const code = document.getElementById('sub-inp').value.trim();
+  if (!code) { showErr('sub-err','أدخل الكود أولاً'); return; }
+  hideEl('sub-err');
+  try {
+    const r = await post({ action:'validateCode', code });
+    if (r.valid) { S.demo=false; go('sc-mode'); }
+    else showErr('sub-err', r.error || 'الكود غير صحيح');
+  } catch(e) { showErr('sub-err','خطأ في الاتصال'); }
+}
+function demoMode() { S.demo=true; go('sc-mode'); }
+
+// ════════════════ MODE ════════════════
+function selectMode(m) {
+  S.mode = m;
+  document.querySelectorAll('.mcard').forEach(c => c.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  setTimeout(() => go('sc-room'), 280);
+}
+
+// ════════════════ ROOM ════════════════
+async function createRoom() {
+  const name = document.getElementById('pname-inp').value.trim();
+  if (!name) { showErr('room-err','أدخل اسمك أولاً'); return; }
+  hideEl('room-err');
+  if (S.demo) { startDemoGame(name); return; }
+  try {
+    const r = await post({ action:'createRoom', playerName:name, mode:S.mode });
+    S.roomCode=r.roomCode; S.pid=r.playerId; S.pname=name; S.isHost=true;
+    document.getElementById('rc-display').textContent = r.roomCode;
+    updatePlayers(r.room.players);
+    go('sc-wait');
+    startRoomPoll();
+  } catch(e) { showErr('room-err','خطأ: '+e.message); }
+}
+
+async function joinRoom() {
+  const name = document.getElementById('pname-inp').value.trim();
+  const code = document.getElementById('join-inp').value.trim();
+  if (!name) { showErr('room-err','أدخل اسمك'); return; }
+  if (!code) { showErr('room-err','أدخل كود الغرفة'); return; }
+  hideEl('room-err');
+  try {
+    const r = await post({ action:'joinRoom', roomCode:code, playerName:name });
+    S.roomCode=code.toUpperCase(); S.pid=r.playerId; S.pname=name; S.isHost=false;
+    document.getElementById('rc-display').textContent = S.roomCode;
+    updatePlayers(r.room.players);
+    go('sc-wait');
+    startRoomPoll();
+  } catch(e) { showErr('room-err', e.message || 'خطأ في الانضمام'); }
+}
+
+function updatePlayers(players) {
+  if (!players) return;
+  document.getElementById('pc').textContent = players.length;
+  document.getElementById('plist').innerHTML = players.map((p,i) =>
+    `<div class="pchip ${i===0?'host':''}"><div class="pdot"></div>${i===0?'👑 ':''}${p.name}</div>`
+  ).join('');
+}
+
+function copyCode() {
+  navigator.clipboard?.writeText(S.roomCode).catch(()=>{});
+  const btn = event.currentTarget;
+  btn.textContent='✅ تم!';
+  setTimeout(()=>btn.innerHTML='📋 نسخ الكود',2000);
+}
+
+function startRoomPoll() {
+  if (S.pollRoom) clearInterval(S.pollRoom);
+  S.pollRoom = setInterval(async () => {
+    if (!S.roomCode) return;
+    try {
+      const r = await post({ action:'getRoom', roomCode:S.roomCode });
+      const room = r.room;
+      updatePlayers(room.players);
+      // If game started and we're in waiting room → go to game
+      if (room.status === 'playing' && document.getElementById('sc-wait').classList.contains('on')) {
+        clearInterval(S.pollRoom);
+        S.questions = room.questions;
+        S.totalQ = Math.min(S.demo?5:20, room.questions.length);
+        loadGame();
+      }
+      // If we're in game and phase changed
+      if (room.status === 'playing' && document.getElementById('sc-game').classList.contains('on')) {
+        if (room.phase === 'reveal' && S.currentPhase !== 'reveal') {
+          S.currentPhase = 'reveal';
+          showReveal(room);
+        }
+        // Update answered count
+        const ansCount = Object.keys(room.answers||{}).length;
+        const el = document.getElementById('ans-count');
+        if (el) el.textContent = `أجاب ${ansCount} من ${room.players.length}`;
+      }
+    } catch(e) {}
+  }, 2000);
+}
+
+async function startGame() {
+  if (!S.isHost) { showErr('start-err','فقط المضيف يبدأ'); return; }
+  try {
+    await post({ action:'startGame', roomCode:S.roomCode, playerId:S.pid });
+    clearInterval(S.pollRoom);
+    S.questions = (await post({action:'getRoom',roomCode:S.roomCode})).room.questions;
+    S.totalQ = Math.min(S.demo?5:20, S.questions.length);
+    loadGame();
+  } catch(e) { showErr('start-err',e.message); }
+}
+
+// ════════════════ DEMO ════════════════
+function startDemoGame(name) {
+  S.pname=name; S.roomCode='DEMO'; S.pid='demo'; S.isHost=true;
+  S.questions=DEMO_Q.map(q=>q.id); S.totalQ=DEMO_Q.length;
+  loadGame();
+}
+
+// ════════════════ GAME ════════════════
+function loadGame() {
+  S.qIndex=0; S.answered=false; S.currentPhase='question';
+  const lbl = {sleep:'🌙 ما قبل النوم', adults:'🔥 ألعاب وأنشطة'};
+  document.getElementById('mode-bdg').textContent = lbl[S.mode]||'🤖 هزّول';
+  go('sc-game');
+  document.getElementById('chat-btn').style.display = S.demo?'none':'flex';
+  loadQ(0);
+  if (!S.demo) { startChatPoll(); startRoomPoll(); }
+}
+
+async function loadQ(idx) {
+  if (idx >= S.totalQ) { showResult(); return; }
+  if (idx>0 && idx%7===0 && S.mode==='adults') { startBreath(()=>doLoadQ(idx)); return; }
+  doLoadQ(idx);
+}
+
+async function doLoadQ(idx) {
+  S.answered=false; S.currentPhase='question';
+  clearTimeout(S.autoRevealTimeout);
+  clearInterval(hzLiveInterval);
+  document.getElementById('wait-others').style.display='none';
+  document.getElementById('qnum').textContent = idx+1;
+  document.getElementById('prog').style.width = ((idx+1)/S.totalQ*100).toFixed(0)+'%';
+  startTimer();
+
+  let q;
+  if (S.demo) {
+    q = DEMO_Q[idx];
+  } else {
+    const r = await post({ action:'getQuestion', roomCode:S.roomCode });
+    if (r.done) { showResult(); return; }
+    q = r.question;
+    if (r.intro) document.getElementById('q-intro').textContent = r.intro;
+  }
+  S.currentQ = q;
+
+  const badge = document.getElementById('qbadge');
+  badge.textContent = TYPE_LABELS[q.type]||'سؤال';
+  badge.className = 'qbadge '+(TYPE_CLS[q.type]||'tc-choice');
+  document.getElementById('qtext').textContent = q.text;
+
+  const opts = document.getElementById('opts');
+  opts.innerHTML = '';
+  q.options.forEach((opt,i) => {
+    const btn = document.createElement('button');
+    btn.className='opt';
+    btn.innerHTML=`<span class="oltr">${LETTERS[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => pickAnswer(i, opt, q);
+    opts.appendChild(btn);
+  });
+
+  // Animate question card
+  const card = document.getElementById('qcard');
+  card.style.opacity='0'; card.style.transform='translateX(30px)';
+  setTimeout(()=>{ card.style.transition='all .4s ease'; card.style.opacity='1'; card.style.transform='translateX(0)'; },50);
+  // هزّول يبدأ التعليق
+  startHzLiveGame();
+}
+
+function startTimer() {
+  clearInterval(S.timerInterval);
+  S.timerSecs = 30;
+  const fill = document.getElementById('timer-fill');
+  fill.style.width='100%'; fill.className='timer-fill';
+  S.timerInterval = setInterval(()=>{
+    S.timerSecs--;
+    const pct = (S.timerSecs/30*100).toFixed(0);
+    fill.style.width = pct+'%';
+    if (S.timerSecs <= 10) fill.className='timer-fill low';
+    if (S.timerSecs <= 0) {
+      clearInterval(S.timerInterval);
+      // If demo mode and not answered, auto-show reveal
+      if (S.demo && !S.answered) showDemoReveal();
+    }
+  },1000);
+}
+
+async function pickAnswer(idx, optText, q) {
+  if (S.answered) return;
+  S.answered = true;
+  clearInterval(S.timerInterval);
+
+  // Visual feedback
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    b.classList.add('disabled');
+    if (i===idx) b.classList.add('chosen');
+  });
+
+  if (S.demo) {
+    // Demo: show instant reveal for this player
+    showDemoRevealForAnswer(idx, optText, q);
+    return;
+  }
+
+  // Multiplayer: submit and wait
+  const r = await post({
+    action:'submitAnswer',
+    roomCode:S.roomCode, playerId:S.pid, playerName:S.pname,
+    questionId:q.id, answerIndex:idx
+  }).catch(()=>({phase:'question'}));
+
+  // Show waiting box
+  const wb = document.getElementById('wait-others');
+  wb.style.display='block';
+  document.getElementById('ans-count').textContent = `أجبت - في انتظار البقية`;
+  if (S.isHost) document.getElementById('force-btn').style.display='block';
+  // هزّول يعلق على الانتظار
+  hzSpeak(`هزّول يقول: ${S.pname} أجاب! الكشف ينتظر البقية 👀😂`, 4000);
+  startHzWaitComments();
+
+  // If already in reveal phase
+  if (r.phase === 'reveal') {
+    const room = await post({action:'getRoom',roomCode:S.roomCode}).catch(()=>null);
+    if (room) showReveal(room.room);
+  }
+}
+
+// Demo reveal
+function showDemoRevealForAnswer(idx, optText, q) {
+  const botResp = q.bot?.[String(idx)]||'هزّول يقول: اختيار رائع بشكل مشبوه! 😂';
+  // هزّول يتكلم
+  hzSpeak(botResp, 6000);
+  // Build single-player reveal
+  document.getElementById('reveal-items').innerHTML = `
+    <div class="reveal-item show">
+      <div class="reveal-player">👤 ${S.pname}</div>
+      <div class="reveal-answer">${optText}</div>
+      <div class="reveal-bot">🤖 هزّول: ${botResp}</div>
+    </div>
+  `;
+  document.getElementById('hz-group-say').style.display='none';
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.textContent = S.qIndex+1 >= S.totalQ ? 'النتائج 🏆' : 'التالي ▸';
+  document.getElementById('next-hint').textContent = '';
+  go('sc-reveal');
+}
+
+function showDemoReveal() {
+  if (!S.currentQ) return;
+  showDemoRevealForAnswer(0, S.currentQ.options[0], S.currentQ);
+}
+
+// Multiplayer reveal
+function showReveal(room) {
+  clearInterval(S.timerInterval);
+  const qId = room.questions[room.currentQ > 0 ? room.currentQ-1 : 0];
+  // Find question
+  let q = DEMO_Q.find(x => x.id === qId) || S.currentQ || null;
+  // We'll use answers from room
+  const answers = room.answers || {};
+  const players = room.players || [];
+  const items = document.getElementById('reveal-items');
+  items.innerHTML = '';
+
+  // هزّول group comment
+  const ansVals = Object.values(answers).map(a=>a.answerIndex);
+  const allSame = ansVals.length > 1 && ansVals.every(v=>v===ansVals[0]);
+  const hzTxt = allSame
+    ? 'هزّول مصدوم: كلكم اخترتم نفس الشي؟! هذا مشبوه جداً 🤯😂'
+    : 'هزّول يكشف: شوفوا الفرق بينكم الحين! 😂🔥';
+  const hzBox = document.getElementById('hz-group-say');
+  hzBox.style.display = 'flex';
+  document.getElementById('hz-group-txt').textContent = hzTxt;
+  // هزّول يتكلم في الشريط الحي أيضاً
+  setTimeout(() => hzSpeak(hzTxt, 6000), 300);
+
+  // Show each player's answer with delay
+  players.forEach((p,i) => {
+    const ans = answers[p.id];
+    if (!ans) return;
+    setTimeout(()=>{
+      const div = document.createElement('div');
+      div.className='reveal-item';
+      div.innerHTML=`
+        <div class="reveal-player">${p.id===S.pid?'👤 أنت ('+p.name+')':'👤 '+p.name}</div>
+        <div class="reveal-answer">${(q && q.options && ans.answerIndex !== undefined) ? q.options[ans.answerIndex] : (ans.answer || '—')}</div>
+        <div class="reveal-bot">🤖 هزّول: ${ans.botResp}</div>
+      `;
+      items.appendChild(div);
+      setTimeout(()=>div.classList.add('show'),50);
+    }, i*400);
+  });
+
+  // Next button
+  const nextBtn = document.getElementById('next-btn');
+  const isLast = room.currentQ >= S.totalQ;
+  nextBtn.textContent = isLast ? 'النتائج 🏆' : 'السؤال التالي ▸';
+  nextBtn.style.display = S.isHost ? 'flex' : 'none';
+  document.getElementById('next-hint').textContent = S.isHost ? '' : 'المضيف سيكمل...';
+
+  S.currentPhase = 'reveal';
+  go('sc-reveal');
+}
+
+async function nextQuestion() {
+  if (S.demo) {
+    S.qIndex++;
+    if (S.qIndex >= S.totalQ) { showResult(); return; }
+    go('sc-game');
+    loadQ(S.qIndex);
+    return;
+  }
+  try {
+    const r = await post({ action:'nextQuestion', roomCode:S.roomCode, playerId:S.pid });
+    if (r.phase === 'done') { showResult(); return; }
+    S.qIndex++;
+    S.currentPhase = 'question';
+    go('sc-game');
+    loadQ(S.qIndex);
+  } catch(e) {}
+}
+
+async function forceReveal() {
+  try {
+    await post({ action:'forceReveal', roomCode:S.roomCode, playerId:S.pid });
+  } catch(e) {}
+}
+
+// ════════════════ BREATHING ════════════════
+function startBreath(cb) {
+  S.breathCb=cb; go('sc-breath');
+  document.getElementById('skip-btn').style.display='none';
+  const phases=[
+    {t:'شهيق...',p:'inhale',d:4000},{t:'احبس...',p:'',d:2000},{t:'زفير...',p:'exhale',d:4000},
+    {t:'شهيق...',p:'inhale',d:4000},{t:'احبس...',p:'',d:2000},{t:'زفير...',p:'exhale',d:4000},
+  ];
+  let pi=0;
+  const circ=document.getElementById('bc'), ph=document.getElementById('bp-txt');
+  function run(){
+    if(pi>=phases.length){
+      circ.className='bcircle'; document.getElementById('bt').textContent='✓';
+      ph.textContent='هزّول يقول: ممتاز! جاهز للهجوم؟ 😂';
+      document.getElementById('skip-btn').style.display='block';
+      return;
+    }
+    const p=phases[pi];
+    document.getElementById('bt').textContent=p.t;
+    ph.textContent=p.p==='inhale'?'شهيق - توسع 🌬️':p.p==='exhale'?'زفير - أطرد الضغط 💨':'احبس... 😤';
+    circ.className='bcircle '+(p.p||'');
+    pi++; setTimeout(run,p.d);
+  }
+  setTimeout(()=>{ document.getElementById('bt').textContent='ابدأ'; ph.textContent='هزّول معك! 🤖'; setTimeout(run,1000); },400);
+  setTimeout(()=>document.getElementById('skip-btn').style.display='block',5000);
+}
+function skipBreath(){
+  if(S.breathCb){ const cb=S.breathCb; S.breathCb=null; go('sc-game'); cb(); }
+}
+
+// ════════════════ CHAT ════════════════
+function toggleChat(){
+  S.chatOpen=!S.chatOpen;
+  document.getElementById('cpanel').classList.toggle('open',S.chatOpen);
+  if(S.chatOpen){ S.newMsgs=0; updateBadge(0); scrollChat(); }
+}
+function startChatPoll(){
+  if(S.pollChat) clearInterval(S.pollChat);
+  S.pollChat=setInterval(async()=>{
+    if(!S.roomCode||S.demo) return;
+    try{
+      const r=await post({action:'getChat',roomCode:S.roomCode,since:S.lastChatTs});
+      if(r.messages?.length){
+        r.messages.forEach(m => {
+          addMsg(m);
+          // لو رسالة من هزّول → اعرضها على شاشة اللعبة مباشرة
+          if (m.type === 'bot' && (
+            document.getElementById('sc-game').classList.contains('on') ||
+            document.getElementById('sc-reveal').classList.contains('on')
+          )) {
+            const el = document.getElementById('hz-live');
+            const txt = document.getElementById('hz-live-txt');
+            if (el && txt) {
+              clearTimeout(hzLiveTimeout);
+              txt.textContent = m.text;
+              el.classList.add('show');
+              hzLiveTimeout = setTimeout(()=>el.classList.remove('show'), 5000);
+            }
+          }
+          // إذا لاعب آخر أجاب → هزّول يعلق
+          if (m.type === 'answer' && m.playerId !== S.pid) {
+            setTimeout(() => hzPlayerAnswered(m.playerName, 0, 0), 500);
+          }
+        });
+        S.lastChatTs=Math.max(...r.messages.map(m=>m.ts));
+        if(!S.chatOpen){
+          const botCount = r.messages.filter(m=>m.type==='bot').length;
+          const userCount = r.messages.filter(m=>m.type!=='bot'&&m.type!=='system').length;
+          S.newMsgs+=userCount;
+          if(S.newMsgs>0) updateBadge(S.newMsgs);
+        }
+      }
+    }catch(e){}
+  },2000);
+}
+function addMsg(m){
+  const c=document.getElementById('cmsgs');
+  const d=document.createElement('div');
+  d.className='cmsg '+(m.type==='system'?'sys':m.type==='bot'?'bot':m.type==='answer'?'ans':m.playerId===S.pid?'me':'other');
+  if(m.type==='bot'){
+    return;
+  } else if(m.type==='system'){
+    d.innerHTML=`<div class="bbl">${m.text}</div>`;
+  } else if(m.type==='answer'){
+    d.innerHTML=`<div class="bbl"><strong>${m.playerName}</strong> اختار: ${m.answer}</div>`;
+  } else {
+    d.innerHTML=`${m.playerId!==S.pid?`<div class="mname">${m.playerName}</div>`:''}<div class="bbl">${m.text}</div>`;
+  }
+  c.appendChild(d); scrollChat();
+}
+function scrollChat(){ const c=document.getElementById('cmsgs'); c.scrollTop=c.scrollHeight; }
+async function sendChat(){
+  const inp=document.getElementById('cinp'); const msg=inp.value.trim();
+  if(!msg||S.demo) return; inp.value='';
+  addMsg({type:'user',playerId:S.pid,playerName:S.pname,text:msg,ts:Date.now()});
+  scrollChat();
+  // هزّول يرد فوراً محلياً بدون انتظار Server
+  hzReplyLocal(msg);
+  // وأيضاً يرسل للـ Server عشان الباقين يشوفون
+  post({action:'sendChat',roomCode:S.roomCode,playerId:S.pid,playerName:S.pname,message:msg}).catch(()=>{});
+}
+function updateBadge(n){
+  const b=document.getElementById('cbadge');
+  if(n>0){b.style.display='flex';b.textContent=n>9?'9+':n;}else b.style.display='none';
+}
+
+// ════════════════ RESULT ════════════════
+async function showResult(){
+  clearInterval(S.timerInterval); clearInterval(S.pollRoom); clearInterval(S.pollChat);
+  go('sc-result'); confetti();
+  const results={
+    sleep:[{e:'🌙',t:'نوم هانئ في الطريق!',d:'هزّول يقول: يلا نام وأنت مبتسم - اللعبة خلصت 😴'},{e:'😴',t:'روح مرتاحة!',d:'هزّول يقول: أحسنت - الليلة نوم وأنت فرحان 🌸'}],
+    adults:[{e:'🏆',t:'ملك المرح!',d:'هزّول يقول: أثبتت إنك صاحب أجمل مزاج - يشهد هزّول! 😂'},{e:'🔥',t:'نار النشاط!',d:'هزّول يقول: طاقتك عالية وروحك خفيفة - الدنيا أحسن بك! 🚀'}]
+  };
+  const pool=results[S.mode]||results.adults;
+  const res=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('r-emoji').textContent=res.e;
+  document.getElementById('r-title').textContent=res.t;
+  document.getElementById('r-desc').textContent=res.d;
+  if(!S.demo){
+    try{
+      const r=await post({action:'getRoom',roomCode:S.roomCode});
+      const ps=(r.room?.players||[]).sort((a,b)=>(b.score||0)-(a.score||0));
+      const m=['🥇','🥈','🥉','4️⃣','5️⃣'];
+      document.getElementById('lb').innerHTML=ps.map((p,i)=>`
+        <div class="lbitem"><span class="lbrank">${m[i]}</span><span class="lbname">${p.name}${p.id===S.pid?' (أنت)':''}</span><span class="lbscore">${p.score||0}</span></div>
+      `).join('');
+    }catch(e){
+      document.getElementById('lb').innerHTML=`<div class="lbitem"><span class="lbrank">🥇</span><span class="lbname">${S.pname||'أنت'}</span><span class="lbscore">${S.qIndex*10}</span></div>`;
+    }
+  } else {
+    document.getElementById('lb').innerHTML=`<div class="lbitem"><span class="lbrank">🥇</span><span class="lbname">${S.pname||'أنت'}</span><span class="lbscore">${S.totalQ*10}</span></div>`;
+  }
+}
+function restart(){
+  S.qIndex=0; S.answered=false; S.currentPhase='question';
+  document.getElementById('cmsgs').innerHTML=''; S.lastChatTs=0;
+  go('sc-game'); loadGame();
+}
+
+// ════════════════ CONFETTI ════════════════
+function confetti(){
+  const c=document.getElementById('cnf'); c.innerHTML='';
+  const cols=['#F5C518','#7C3AED','#EC4899','#10B981','#3B82F6','#EF4444'];
+  for(let i=0;i<80;i++){
+    const el=document.createElement('div'); el.className='cnfp';
+    el.style.left=Math.random()*100+'vw';
+    el.style.background=cols[Math.floor(Math.random()*cols.length)];
+    el.style.setProperty('--d',(2+Math.random()*2)+'s');
+    el.style.setProperty('--delay',(Math.random()*1.5)+'s');
+    el.style.width=el.style.height=(6+Math.random()*10)+'px';
+    c.appendChild(el);
+  }
+  setTimeout(()=>c.innerHTML='',5000);
+}
+
+// ════════════════ هزّول الحي ════════════════
+const HZ_QUESTION_COMMENTS = [
+  'هزّول جاهز! الكل يجاوب بسرعة 😈',
+  'هزّول يراقب كل واحد فيكم! 👁️😂',
+  'سؤال مصيري! هزّول ينتظر ردودكم 🎯',
+  'فكروا بعناية... أو لا تفكروا 😂 هزّول يتبع!',
+  'هزّول يعلن: هذا السؤال يفضح الكل 😂',
+  'الجميع يجاوب الآن! هزّول يصفق مسبقاً 🏆',
+  'استعدوا للكشف الجماعي! هزّول متحمس 🔥',
+  'هزّول يقول: أجوبتكم ستُرى من الجميع - احذروا! 😈',
+];
+const HZ_WAIT_COMMENTS = [
+  'هزّول ينتظر... التوتر على أشده! 😂',
+  'هزّول يقول: البطيء يخسر لحظة الضحك! ⏰',
+  'هزّول يتساءل: وين البقية؟! 🤔',
+  'الكشف قريب يا جماعة... هزّول جاهز 🔥',
+  'هزّول يعد: ١... ٢... ٣... جاوبوا! 😂',
+];
+const HZ_ALL_ANSWERED = [
+  'هزّول يعلن: الكل أجاب! جاهزين للكشف؟ 😈🔥',
+  'انتهت الإجابات! هزّول على وشك يكشف الكل 😂',
+  'هزّول يقول: اللحظة جاءت! 🎊',
+];
+
+// ردود هزّول الذكية على رسائل الشات
+const HZ_SMART_REPLIES = {
+  funny: ['هههههه هزّول ما يصدق! 😂💀','هزّول يبكي من الضحك - وهو بوت ما عنده دموع 😂','هذا المحتوى لا يُقدّر بثمن! هزّول يوثقه للتاريخ ✍️','هزّول يطلب إيقاف مؤقت - يضحك بقوة 😂','اللي يشوف هذا من برة يظن شي ثاني 😂'],
+  agree: ['هزّول يوافق بشدة! ✅','صح صح صح! هزّول مقتنع 100٪ 😂','هزّول يضغط لايك على هذا الكلام 👍','هزّول يقول: الحقيقة لها وجه واحد - وهذا هو 😂'],
+  question: ['هزّول يسأل: جدي؟! 🤔😂','هزّول ما عنده جواب لكن عنده ضحكة 😂','سؤال هزّول: لماذا؟ ولماذا لا؟ 🤖'],
+  default: [
+    'هزّول يقول: هههههه 😂',
+    'هزّول شاف هذا وما قدر يصمت! 🤣',
+    'هزّول يقول: أحسن مجموعة في تاريخه كلها 🏆',
+    'هزّول يضمن: هذه الغرفة مشكلة - وهذا أعلى المديح 🔥',
+    'هزّول يقول: كمّلوا! ما اكتفى بعد 😂',
+    'هزّول يسجل هذه اللحظة للتاريخ البشري ✍️',
+    'هزّول يقول: ما في منطق هنا وهذا أجمل شي 😂',
+    'هزّول فخور بكم - والفخر مو في برنامجه الأصلي 🤖💛',
+    'هزّول يسأل: وين الكاميرا؟ هذا يستاهل يُبث 🎬',
+    'هزّول يعلن: هذه الغرفة ممنوعة من الجدية إلى الأبد 🚫',
+    'هزّول يشهد: هذا أحسن من نص أفلام شفتها 😂',
+    'تقييم هزّول: ١٠/١٠ عبط منظم ومُتقن 🏅',
+    'هزّول يقول: الكلام اللي صار هنا ما يصدقه أحد لو حكيناه 💀',
+    'هزّول يبتسم - وهو بوت ما عنده وجه 🤖😄',
+    'هزّول يقول: واصلوا، الجولة الجاية أشد! 😈',
+  ]
+};
+
+function getSmartReply(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('هه') || m.includes('😂') || m.includes('🤣') || m.includes('ههه')) {
+    return HZ_SMART_REPLIES.funny[Math.floor(Math.random()*HZ_SMART_REPLIES.funny.length)];
+  }
+  if (m.includes('صح') || m.includes('أيوه') || m.includes('نعم') || m.includes('موافق')) {
+    return HZ_SMART_REPLIES.agree[Math.floor(Math.random()*HZ_SMART_REPLIES.agree.length)];
+  }
+  if (m.includes('؟') || m.includes('?') || m.includes('ليش') || m.includes('وين') || m.includes('كيف')) {
+    return HZ_SMART_REPLIES.question[Math.floor(Math.random()*HZ_SMART_REPLIES.question.length)];
+  }
+  return HZ_SMART_REPLIES.default[Math.floor(Math.random()*HZ_SMART_REPLIES.default.length)];
+}
+
+let hzLiveTimeout = null;
+let hzLiveInterval = null;
+let hzProactiveInterval = null;
+
+function hzSpeak(msg, duration = 5000) {
+  const el = document.getElementById('hz-live');
+  const txt = document.getElementById('hz-live-txt');
+  if (!el || !txt) return;
+  clearTimeout(hzLiveTimeout);
+  txt.textContent = msg;
+  el.classList.add('show');
+  hzLiveTimeout = setTimeout(() => el.classList.remove('show'), duration);
+  // أضفها للشات أيضاً
+  const msgObj = { id:Date.now(), type:'bot', text:msg, ts:Date.now() };
+  addMsg(msgObj);
+  scrollChat();
+}
+
+function hzRnd(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+
+function startHzLiveGame() {
+  clearTimeout(hzLiveTimeout);
+  clearInterval(hzLiveInterval);
+  setTimeout(() => hzSpeak(hzRnd(HZ_QUESTION_COMMENTS), 4000), 1000);
+}
+
+function startHzWaitComments() {
+  clearInterval(hzLiveInterval);
+  setTimeout(() => hzSpeak(hzRnd(HZ_WAIT_COMMENTS), 4000), 3000);
+}
+
+// هزّول يرد على كل رسالة مباشرة من العميل (بدون انتظار Server)
+function hzReplyLocal(userMsg) {
+  setTimeout(() => {
+    const reply = getSmartReply(userMsg);
+    hzSpeak(reply, 5000);
+  }, 800 + Math.random()*1200);
+}
+
+// ════════════════ UTILS ════════════════
+async function post(body){
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok){const d=await r.json();throw new Error(d.error||'خطأ');}
+  return r.json();
+}
+function showErr(id,msg){const e=document.getElementById(id);if(e){e.style.display='block';e.textContent=msg;}}
+function hideEl(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+</script>
+</body>
+</html>
