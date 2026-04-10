@@ -1,1 +1,8 @@
-{"name":"hazal-v4","version":"4.0.0","private":true}
+{
+  "name": "hazal-v4",
+  "version": "4.0.0",
+  "private": true,
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}
